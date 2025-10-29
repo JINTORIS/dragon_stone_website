@@ -620,7 +620,7 @@ th:last-child {
     color: white;
 }
 
-#login-form #registr-url {
+#login-form #register-url {
     color: green;
 }
 
@@ -663,7 +663,7 @@ th:last-child {
     margin: 5px auto;
 }
 
-#account-form #chnage-pass-btn {
+#account-form #change-pass-btn {
     color: white;
     background-color: white;
 }
@@ -688,7 +688,7 @@ th:last-child {
     margin: 10px auto;
 }
 
-#checkout-form .checkout-largr-element {
+#checkout-form .checkout-large-element {
     width: 95%;
 }
 
@@ -696,3 +696,5 @@ th:last-child {
     margin: 10px;
     text-align: right;
 }
+
+#imgclass {}

@@ -1,0 +1,517 @@
+<?php
+session_start();
+$currentPage = basename($_SERVER['PHP_SELF']);
+//include('../server/connection.php');
+
+// Check the connection:
+if (!$conn) {
+    die("Couldn't connect to database: " . mysqli_connect_error());
+}
+
+echo "Connected successfully!";
+
+// Close the connection (optional but recommended)
+mysqli_close($conn);
+?>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Shop premium products at Dragon Stone with the best prices in the market.">
+        <title>DRAGON STONE</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
+        <!-- Custom Styles -->
+        <style>
+            html {
+                height: 100%;
+            }
+            
+            body {
+                background-image: url('assets/images/GREEN.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                min-height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .content {
+                flex: 1 0 auto;
+                /* Ensures content takes up available space */
+            }
+            
+            .navbar-custom {
+                background-color: #1b4d3e;
+            }
+            
+            .navbar-custom .navbar-brand,
+            .navbar-custom .nav-link {
+                color: #ffffff;
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
+            
+            .navbar-custom .nav-link:hover {
+                color: #a5c9a1;
+            }
+            
+            .navbar-custom .fa-cart-shopping,
+            .navbar-custom .fa-user {
+                color: #ffffff;
+            }
+            
+            .star .fas.fa-star {
+                color: yellow;
+            }
+            
+            .cart-counter {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: red;
+                color: white;
+                border-radius: 50%;
+                padding: 2px 6px;
+                font-size: 12px;
+            }
+            
+            .one {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .one img {
+                transition: transform 0.3s ease;
+            }
+            
+            .one:hover img {
+                transform: scale(1.05);
+            }
+            
+            .details {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                width: 80%;
+            }
+            
+            .footer-section {
+                background-color: #1b4d3e;
+                color: white;
+                padding: 40px 0 20px;
+                flex-shrink: 0;
+                /* Prevents footer from shrinking */
+            }
+            
+            .footer-title {
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+            
+            .footer-description {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .footer-links a {
+                display: block;
+                color: #a5c9a1;
+                text-decoration: none;
+                margin-bottom: 8px;
+                transition: color 0.3s ease;
+            }
+            
+            .footer-links a:hover {
+                color: white;
+            }
+            
+            .social-icons {
+                margin-top: 15px;
+            }
+            
+            .social-icons a {
+                color: white;
+                font-size: 20px;
+                margin-right: 15px;
+                transition: color 0.3s ease;
+            }
+            
+            .social-icons a:hover {
+                color: #a5c9a1;
+            }
+            
+            .footer-divider {
+                border-color: #a5c9a1;
+                margin: 30px 0;
+            }
+            
+            .newsletter-form {
+                margin-top: 20px;
+            }
+            
+            .newsletter-input {
+                border: none;
+                border-radius: 5px 0 0 5px;
+            }
+            
+            .newsletter-btn {
+                background-color: #a5c9a1;
+                color: #1b4d3e;
+                border: none;
+                border-radius: 0 5px 5px 0;
+                padding: 10px 20px;
+            }
+            
+            .newsletter-text {
+                color: #a5c9a1;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
+            
+            .footer-copyright {
+                font-size: 12px;
+                color: #a5c9a1;
+                margin-top: 20px;
+            }
+            /* Product Image Styles */
+            
+            .main-product-img {
+                max-width: 300px;
+                /* Reduced main image size */
+                height: auto;
+                display: block;
+                margin: 0 auto;
+                /* Center the image */
+            }
+            
+            .small-product-img {
+                max-width: 60px;
+                /* Reduced thumbnail image size */
+                height: auto;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+            
+            .small-product-img:hover {
+                transform: scale(1.1);
+                /* Slight zoom effect on hover */
+            }
+            
+            .small-img-col {
+                flex: 1;
+                margin: 0 5px;
+                /* Spacing between thumbnails */
+            }
+            /* Product Details Styles */
+            
+            .buy-btn {
+                background-color: #a5c9a1;
+                color: #1b4d3e;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-weight: 500;
+                transition: background-color 0.3s ease;
+                margin-top: 10px;
+            }
+            
+            .buy-btn:hover {
+                background-color: #8ab87d;
+            }
+            
+            input[type="number"] {
+                width: 60px;
+                padding: 5px;
+                border: 1px solid #1b4d3e;
+                border-radius: 5px;
+                margin-right: 10px;
+            }
+            
+            .product-details {
+                color: #ffffff;
+            }
+            
+            .product-details h6 {
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+            
+            .product-details h2 {
+                font-size: 2rem;
+                color: #a5c9a1;
+            }
+            
+            .product-details h4 {
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+            
+            .product-details span {
+                font-size: 1rem;
+                color: #cccccc;
+            }
+            /* Related Products Section */
+            
+            #related {
+                margin-bottom: 50px;
+            }
+            
+            #related h3 {
+                color: white;
+                font-size: 1.8rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+            
+            #related hr {
+                border-color: #a5c9a1;
+                margin: 10px auto;
+                width: 100px;
+            }
+            
+            #related .one {
+                margin-bottom: 20px;
+            }
+            
+            #related .one img {
+                max-height: 200px;
+                /* Ensure consistent image size */
+                object-fit: cover;
+                width: 100%;
+            }
+            
+            #related .details h2 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+            
+            #related .details .btn {
+                background-color: #a5c9a1;
+                color: #1b4d3e;
+                border: none;
+                padding: 8px 15px;
+                transition: background-color 0.3s ease;
+            }
+            
+            #related .details .btn:hover {
+                background-color: #8ab87d;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="content">
+            <!-- NAVBAR -->
+            <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+                <div class="container">
+                    <a class="navbar-brand fw-bold" href="#">DRAGON STONE</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <!-- LEFT LINKS -->
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link active" href="#">HOME</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">PRODUCTS</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">SHOP</a></li>
+                        </ul>
+
+                        <!-- RIGHT LINKs-->
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa-regular fa-user"></i> Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- SINGLE PRODUCT SECTION -->
+            <section class="single-product my-5 pt-5">
+                <div class="container">a
+                    <div class="row mt-5">
+                        <div class="col-lg-5 col-md-6 col-sm-12">
+                            <img id="mainIMG" class="img-fluid main-product-img" src="assets/images/BAPESTAS.JPG" alt="BAPESTAS IMAGE" />
+                            <div class="small-img-group mt-3">
+                                <div class="d-flex justify-content-between">
+                                    <div class="small-img-col">
+                                        <img src="assets/images/GUCCI.JPG" alt="GUCCI" class="small-product-img" />
+                                    </div>
+                                    <div class="small-img-col">
+                                        <img src="assets/images/GOTH GUITER.JPG" alt="GOTH GUITER" class="small-product-img" />
+                                    </div>
+                                    <div class="small-img-col">
+                                        <img src="assets/images/TOYS.JPEG" alt="TOYS" class="small-product-img" />
+                                    </div>
+                                    <div class="small-img-col">
+                                        <img src="assets/images/POLA-ROID.jpeg" alt="POLA-ROID" class="small-product-img" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-12 product-details">
+                            <h6>BAPESTAS</h6>
+                            <h2>R5000</h2>
+                            <input type="number" value="1" min="1" />
+                            <button class="buy-btn">ADD TO CART</button>
+                            <h4 class="mt-5 mb-5">PRODUCTS DETAILS</h4>
+                            <span>THE DETAILS OF THIS PRODUCT WILL BE DISPLAYED SHORTLY</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RELATED PRODUCTS -->
+            <section id="related" class="my-5 pb-5">
+                <div class="container text-center mt-5 py-5">
+                    <h3>RELATED PRODUCTS</h3>
+                    <hr>
+                    <div class="row">
+
+                        <!-- ONE -->
+                        <div class="one col-lg-3 col-md-6 col-sm-12 p-0">
+                            <img class="img-fluid" src="assets/images/GUCCI.JPG" alt="GUCCI" />
+                            <div class="details text-center">
+                                <h2>GLASSES</h2>
+                                <div class="rating">
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                </div>
+                                <button class="btn text-uppercase">Shop Now</button>
+                            </div>
+                        </div>
+                        <!-- Two -->
+                        <div class="one col-lg-3 col-md-6 col-sm-12 p-0">
+                            <img class="img-fluid" src="assets/images/GOTH GUITER.JPG" alt="GOTH GUITARS" />
+                            <div class="details text-center">
+                                <h2>GUITARS</h2>
+                                <div class="rating">
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                </div>
+                                <button class="btn text-uppercase">Shop Now</button>
+                            </div>
+                        </div>
+                        <!-- THREE -->
+                        <div class="one col-lg-3 col-md-6 col-sm-12 p-0">
+                            <img class="img-fluid" src="assets/images/POLA-ROID.jpeg" alt="CAMERA" />
+                            <div class="details text-center">
+                                <h2>CAMERAS</h2>
+                                <div class="rating">
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                </div>
+                                <button class="btn text-uppercase">Shop Now</button>
+                            </div>
+                        </div>
+                        <!-- 4OUR -->
+                        <div class="one col-lg-3 col-md-6 col-sm-12 p-0">
+                            <img class="img-fluid" src="assets/images/TOYS.JPEG" alt="Toys" />
+                            <div class="details text-center">
+                                <h2>TOYS</h2>
+                                <div class="rating">
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                    <span class="star"><i class="fas fa-star"></i></span>
+                                </div>
+                                <button class="btn text-uppercase">Shop Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <h5 class="footer-title">DRAGON STONE</h5>
+                        <p class="footer-description">Your premier destination for premium sports shoes, luxury watches, and stylish outerwear.</p>
+                        <p class="footer-copyright">&copy; 2025 Dragon Stone. All rights reserved.</p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <h5 class="footer-title">Customer Service</h5>
+                        <div class="footer-links">
+                            <a href="#" class="footer-link"><i class="fas fa-truck"></i> Shipping Policy</a>
+                            <a href="#" class="footer-link"><i class="fas fa-exchange-alt"></i> Returns</a>
+                            <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> FAQs</a>
+                            <a href="#" class="footer-link"><i class="fas fa-envelope"></i> Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12 mb-4">
+                        <h5 class="footer-title">FOLLOW US</h5>
+                        <p class="footer-description">STAY UPDATED WITH OUR LATEST COLLECTIONS AND PROMOTIONS</p>
+                        <div class="social-icons">
+                            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="footer-divider">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="newsletter-form text-center">
+                            <h6>SUBSCRIBE TO OUR NEWSLETTER</h6>
+                            <form action="subscribe.html" method="POST">
+                                <div class="input-group">
+                                    <input type="email" name="email" class="form-control newsletter-input" placeholder="Enter your email address" required>
+                                    <button class="btn newsletter-btn" type="submit">SUBSCRIBE</button>
+                                </div>
+                                <small class="newsletter-text">GET THE LATEST UPDATES AND EXCLUSIVE OFFERS</small>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Thumbnail Image Swap Script -->
+        <script>
+            const mainIMG = document.getElementById("mainIMG");
+            const smallIMG = document.getElementsByClassName("small-product-img");
+
+            for (let i = 0; i < smallIMG.length; i++) {
+                smallIMG[i].onclick = function() {
+                    mainIMG.src = smallIMG[i].src;
+                };
+            }
+        </script>
+    </body>
+
+    </html>

@@ -1,8 +1,8 @@
 <?php
 session_start();
 $currentPage = basename($_SERVER['PHP_SELF']);
+//include('../server/connection.php');
 ?>
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -10,7 +10,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Learn about Dragon Stone, our mission, and our commitment to quality products.">
-        <title>DRAGON STONE - ABOUT US</title>
+        <title>DRAGON STONE -ABOUT US</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -230,7 +230,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </div>
                     <div class="col-md-4 text-center">
                         <h3>OUR VALUES</h3>
-                        <p>INTEGRITY, INNOVATION AUTHENTICIYT,GET RICH AND DIE FLY.</p>
+                        <p>INTEGRITY, INNOVATION AUTHENTICITY,GET RICH AND DIE FLY.</p>
                     </div>
                 </div>
             </div>
@@ -248,39 +248,41 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <h5 class="footer-title">CUSTOMER SERVICE</h5>
                         <div class="footer-links">
-                            <a href="shipping.html" class="footer-link"><i class="fas fa-truck"></i> SHIPPING POLICY</a>
-                            <a href="returns.html" class="footer-link"><i class="fas fa-exchange-alt"></i> RETURNS & EXCHANGES</a>
-                            <a href="faq.html" class="footer-link"><i class="fas fa-question-circle"></i> FAQs</a>
-                            <a href="contact.html" class="footer-link"><i class="fas fa-envelope"></i> CONTACT US</a>
+
                         </div>
+                        <a href="contact.html" class="footer-link"><i class="fas fa-envelope"></i> CONTACT US</a>
+                        <a href="shipping.html" class="footer-link"><i class="fas fa-truck"></i> SHIPPING POLICY</a>
+                        <a href="returns.html" class="footer-link"><i class="fas fa-exchange-alt"></i> RETURNS & EXCHANGES</a>
+                        <a href="faq.html" class="footer-link"><i class="fas fa-question-circle"></i> FAQs</a>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12 mb-4">
-                        <h5 class="footer-title">FOLLOW US</h5>
-                        <div>
-                            <img class="img-fluid" src="assets/images/IG.jpeg" alt="INSTAGRAM" style="width: 100px; height: auto;" />
-                            <p class="footer-description">STAY UPDATED WITH OUR LATEST COLLECTIONS AND PROMOTIONS</p>
-                            <div class="social-icons">
-                                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="footer-divider">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="newsletter-form text-center">
-                                <h6>SUBSCRIBE TO OUR NEWSLETTER</h6>
-                                <div class="input-group">
-                                    <input type="email" name="email" class="form-control newsletter-input" placeholder="Enter your email address" required>
-                                    <button class="btn newsletter-btn" type="button" onclick="handleNewsletter()">SUBSCRIBE</button>
-                                </div>
-                                <small class="newsletter-text">GET THE LATEST UPDATES AND EXCLUSIVE OFFERS</small>
-                            </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 mb-4">
+                    <h5 class="footer-title">FOLLOW US</h5>
+                    <div>
+                        <img class="img-fluid" src="assets/images/IG.jpeg" alt="INSTAGRAM" style="width: 100px; height: auto;" />
+                        <p class="footer-description">STAY UPDATED WITH OUR LATEST COLLECTIONS AND PROMOTIONS</p>
+                        <div class="social-icons">
+                            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
+                <hr class="footer-divider">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="newsletter-form text-center">
+                            <h6>SUBSCRIBE TO OUR NEWSLETTER</h6>
+                            <div class="input-group">
+                                <input type="email" name="email" class="form-control newsletter-input" placeholder="Enter your email address" required>
+                                <button class="btn newsletter-btn" type="button" onclick="handleNewsletter()">SUBSCRIBE</button>
+                            </div>
+                            <small class="newsletter-text">GET THE LATEST UPDATES AND EXCLUSIVE OFFERS</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </footer>
 
         <!-- Bootstrap JS -->

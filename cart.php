@@ -1,9 +1,8 @@
 <?php
 session_start();
 $currentPage = basename($_SERVER['PHP_SELF']);
-//include('../server/connection.php');
+//include('../server/configure.php');
 ?>
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -301,7 +300,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <p class="footer-copyright">&copy; 2025 Dragon Stone. All rights reserved.</p>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                            <h5 class="footer-title">CUSTOMR SERVICE</h5>
+                            <h5 class="footer-title">CUSTOMER SERVICE</h5>
                             <div class="footer-links">
                                 <a href="shipping.html" class="footer-link"><i class="fas fa-truck"></i>SHIPPING POLICY</a>
                                 <a href="returns.html" class="footer-link"><i class="fas fa-exchange-alt"></i>RETURNS & EXCHANGE</a>
